@@ -11,7 +11,10 @@ axios.get('https://adventofcode.com/2018/day/3/input',
         // let array = new Array("1", "2");
         let field =  InitializeField(1000);
         for(let claim of array){
-            setClaim(claim, field);
+            if(claim.replace(/\g/, '') != '')
+                setClaim(claim, field);
+            else
+                console.log("strerr => "+claim);
         }
         res = findRes(field);
     })
@@ -45,24 +48,23 @@ function setClaim(strClaim, field){
 }
 
 function getId(strClaim){
-    let r = strClaim.match('/#\d*/');
-    return r;
+    return parseInt(strClaim.match(/\d+/g)[0]);
 }
 
 function getLeft(strClaim){
-    return strClaim[5];
+    return parseInt(strClaim.match(/\d+/g)[1]);
 }
 
 function getTop(strClaim){
-    return strClaim[7];
+    return parseInt(strClaim.match(/\d+/g)[2]);
 }
 
 function getWidth(strClaim){
-    return strClaim[10];
+    return parseInt(strClaim.match(/\d+/g)[3]);
 }
 
 function getHeight(strClaim){
-    return strClaim[12];
+    return parseInt(strClaim.match(/\d+/g)[4]);
 }
 
 function findRes(array){
