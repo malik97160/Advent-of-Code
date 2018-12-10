@@ -1,14 +1,14 @@
 const axios = require('axios')
 
-axios.get('https://adventofcode.com/2018/day/3', 
+axios.get('https://adventofcode.com/2018/day/3/input', 
 {
     headers: {
         Cookie: "_ga=GA1.2.1125168595.1543853367; _gid=GA1.2.627092863.1544100854; session=53616c7465645f5fac1192d153220fe7b36c93d74957ad27593f92688fbb4715f51e859c45e6af82c27f0ee9d75f7a34; _gat=1"
     }
 })
     .then((data) =>{
-        // let array = data.data.split('\n');
-        let array = new Array("1", "2");
+        let array = data.data.split('\n');
+        // let array = new Array("1", "2");
         let field =  InitializeField(1000);
         for(let claim of array){
             setClaim(claim, field);
@@ -36,49 +36,44 @@ function setClaim(strClaim, field){
 
     for(let i = 0; i < width; i++){
         for( let j = 0; j < height; j++){
-            let tmp = field[left+(i+1)][top +(j+1)];
-            if(tmp === undefined)
-              tmp = id;
+            if(field[left+(i+1)][top +(j+1)] === undefined)
+            field[left+(i+1)][top +(j+1)] = id;
             else
-                tmp = 'x';
+            field[left+(i+1)][top +(j+1)] = 'x';
         }
     }
 }
 
 function getId(strClaim){
-    if(strClaim === "1")
-        return 1;
-    else if(strClaim === "2"){
-        return 2 ;
-    }
+    let r = strClaim.match('/#\d*/');
+    return r;
 }
 
 function getLeft(strClaim){
-    if(strClaim === "1")
-        return 1;
-    else if(strClaim === "2"){
-        return 2 ;
-    }
+    return strClaim[5];
 }
 
 function getTop(strClaim){
-    return 3;
+    return strClaim[7];
 }
 
 function getWidth(strClaim){
-    return 4;
+    return strClaim[10];
 }
 
 function getHeight(strClaim){
-    return 4;
+    return strClaim[12];
 }
 
 function findRes(array){
+    let count = 0;
     for(let i = 0; i < 1000; i++){
         for(let j = 0; j < 1000; j++){
             if(array[i][j] == 'x'){
-                console.log("i => "+i+" j => "+j);
+                count++;
+                // console.log("i => "+i+" j => "+j);
             }
         }
     }
+    console.log("res => "+count)
 }
