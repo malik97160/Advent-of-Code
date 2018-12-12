@@ -13,10 +13,15 @@ axios.get('https://adventofcode.com/2018/day/3/input',
         for(let claim of array){
             if(claim.replace(/\g/, '') != '')
                 setClaim(claim, field);
-            else
-                console.log("strerr => "+claim);
         }
-        res = findRes(field);
+
+        for(let claim of array){
+            if(claim.replace(/\g/, '') != ''){
+                if(findRes(claim,field)){
+                    console.log("res => "+claim);
+                }
+            }
+        }
     })
     .catch((error) =>{
         console.log(error);
@@ -41,8 +46,9 @@ function setClaim(strClaim, field){
         for( let j = 0; j < height; j++){
             if(field[left+(i+1)][top +(j+1)] === undefined)
             field[left+(i+1)][top +(j+1)] = id;
-            else
-            field[left+(i+1)][top +(j+1)] = 'x';
+            else{
+            field[left+(i+1)][top +(j+1)] = 'x';         
+            }
         }
     }
 }
@@ -67,16 +73,41 @@ function getHeight(strClaim){
     return parseInt(strClaim.match(/\d+/g)[4]);
 }
 
-function findRes(array){
+/*function findRes(array){
     let count = 0;
+    let ids = [];
     for(let i = 0; i < 1000; i++){
         for(let j = 0; j < 1000; j++){
             if(array[i][j] !== 'x' && array[i][j] !== undefined){
-                //count++;
-                 console.log(array[i][j]);
+                let id = array[i][j];
+                    if (!ids.includes(id)){
+                        ids.push(id);
+                    }
             }
         }
     }
+    return ids;
+}*/
+
+function findRes(strClaim, field){
+    let countUnique = 0;
+    let id = getId(strClaim);
+    let left = getLeft(strClaim);
+    let top = getTop(strClaim);
+    let width = getWidth(strClaim);
+    let height = getHeight(strClaim);
+
+    for(let i = 0; i < width; i++){
+        for( let j = 0; j < height; j++){
+            if(field[left+(i+1)][top +(j+1)] !== undefined && field[left+(i+1)][top +(j+1)] !== 'x'){
+                    countUnique+=1;
+            }
+
+        }
+    }
+
+    return (width * height) === countUnique;
 }
 
-function CheckIfTheWholeFieldIsNotOverlapped()
+function CheckIfTheWholeFieldIsNotOverlapped(){
+}
