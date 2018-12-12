@@ -73,25 +73,8 @@ function getHeight(strClaim){
     return parseInt(strClaim.match(/\d+/g)[4]);
 }
 
-/*function findRes(array){
-    let count = 0;
-    let ids = [];
-    for(let i = 0; i < 1000; i++){
-        for(let j = 0; j < 1000; j++){
-            if(array[i][j] !== 'x' && array[i][j] !== undefined){
-                let id = array[i][j];
-                    if (!ids.includes(id)){
-                        ids.push(id);
-                    }
-            }
-        }
-    }
-    return ids;
-}*/
-
 function findRes(strClaim, field){
     let countUnique = 0;
-    let id = getId(strClaim);
     let left = getLeft(strClaim);
     let top = getTop(strClaim);
     let width = getWidth(strClaim);
@@ -107,7 +90,4 @@ function findRes(strClaim, field){
     }
 
     return (width * height) === countUnique;
-}
-
-function CheckIfTheWholeFieldIsNotOverlapped(){
 }
